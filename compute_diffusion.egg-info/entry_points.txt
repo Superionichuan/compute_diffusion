@@ -1,0 +1,2 @@
+[console_scripts]
+compute-diffusion = compute_diffusion.compute_diffusion:main

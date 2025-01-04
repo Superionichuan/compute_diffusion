@@ -1,0 +1,9 @@
+README.md
+setup.py
+compute_diffusion/__init__.py
+compute_diffusion/compute_diffusion.py
+compute_diffusion.egg-info/PKG-INFO
+compute_diffusion.egg-info/SOURCES.txt
+compute_diffusion.egg-info/dependency_links.txt
+compute_diffusion.egg-info/entry_points.txt
+compute_diffusion.egg-info/top_level.txt
