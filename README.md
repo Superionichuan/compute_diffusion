@@ -96,7 +96,7 @@ D = \frac{	slope}{2 \cdot n \cdot 	time\\_unit} \cdot 10^{-4} \\ cm^{2} \\ s^{-
 $$
 
 Where $time\\_unit$ is the scaling factor for time (e.g., 1 for ps, 0.001 for fs).
-and the statical error is calculated by:
+and the statistical error is calculated by:
 
 $$
 D_{error} = \frac{ slope_{Max} - slope_{Min} } {2 \cdot 2 \cdot n \cdot 	time\\_unit} \cdot 10^{-4} \\ cm^{2} \\ s^{-1}
