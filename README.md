@@ -110,17 +110,6 @@ Where \(	ext{time\_unit}\) is the scaling factor for time (e.g., 1 for ps, 0.001
 
 ## Installation
 
-### Clone the Repository
-```bash
-git clone https://github.com/Superionichuan/compute_diffusion.git
-cd compute_diffusion
-```
-
-### Install the Package
-```bash
-pip install .
-```
-
 ### Install from GitHub
 ```bash
 pip install git+https://github.com/Superionichuan/compute_diffusion.git
@@ -138,11 +127,11 @@ compute-diffusion --filename MSD__                   --skip_row 1               
 ### Parameters
 | Parameter      | Description                                           |
 |----------------|-------------------------------------------------------|
-| `--filename`   | Input data file (e.g., `MSD__`).                      |
+| `--filename`   | Input data file (e.g., `MSD.dat`).                      |
 | `--skip_row`   | Number of rows to skip in the input file.             |
 | `--time_index` | Column index for time data (0-based).                 |
 | `--msd_col`    | Column index for MSD data (0-based).                  |
-| `--time_unit`  | Time unit conversion factor (e.g., 1 for fs, 1000 for ps). |
+| `--time_unit`  | Time unit conversion factor (e.g., 1 for ps, 0.001 for fs). |
 | `--group_size` | Number of cumulative segments to compute slopes.      |
 | `--dimension`  | Number of spatial dimensions (e.g., 3 for 3D diffusion). |
 
