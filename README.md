@@ -121,7 +121,7 @@ pip install git+https://github.com/Superionichuan/compute_diffusion.git
 
 ### Command Line
 ```bash
-compute-diffusion --filename MSD__                   --skip_row 1                   --time_index 0                   --msd_col 1                   --time_unit 1                   --group_size 4                   --dimension 3
+compute-diffusion   --f MSD.dat    --skip_row 1    --time_index 0    --msd_col 1    --time_unit 1    --group_size 4    --dimension 3
 ```
 
 ### Parameters
