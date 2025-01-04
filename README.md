@@ -1,74 +1,144 @@
 # Compute Diffusion Coefficients from MSD Data
 
-This Python tool calculates diffusion coefficients (\(D\)) from Mean Squared Displacement (MSD) data based on user-provided parameters.
+This Python tool calculates diffusion coefficients (\(D\)) from Mean Squared Displacement (MSD) data using user-provided parameters.
 
-```text
+---
+
 ## Formula Derivation
 
 ### Step 1: Mean Squared Displacement (MSD)
-MSD(t) = < |r(t) - r(0)|^2 >
+The Mean Squared Displacement (MSD) is defined as:
 
-For normal diffusion in n-dimensional space:
-MSD(t) = 2 * n * D * t
+\[
+MSD(t) = \langle |r(t) - r(0)|^2 angle
+\]
 
-where:
-- n: Dimension of the system (e.g., 1 for 1D, 2 for 2D, and 3 for 3D);
-- D: Diffusion coefficient (cm^2/s);
-- t: Time (s).
+For normal diffusion in an n-dimensional space:
 
-### Step 2: Using Slope to Calculate D
-Rearranging the MSD formula:
-D = MSD(t) / (2 * n * t)
+\[
+MSD(t) = 2 \cdot n \cdot D \cdot t
+\]
 
-The slope (slope) of the MSD vs. t curve is calculated using least squares regression:
-slope = MSD / t
+Where:
+- **n**: Dimension of the system (e.g., 1 for 1D, 2 for 2D, and 3 for 3D)
+- **D**: Diffusion coefficient (cm\(^2\)/s)
+- **t**: Time (s)
 
-Substituting slope into the formula for D:
-D = slope / (2 * n)
+---
+
+### Step 2: Using MSD to Calculate \(D\)
+
+#### 1. **Rearranging MSD Formula**
+
+From the MSD equation:
+
+\[
+D = rac{MSD(t)}{2 \cdot n \cdot t}
+\]
+
+#### 2. **Slope Method**
+
+In practical experiments, MSD values are obtained at various time intervals. To compute \(D\), we calculate the slope of the MSD vs. \(t\) curve:
+
+\[
+	ext{slope} = rac{MSD}{t}
+\]
+
+Substituting this into the formula for \(D\):
+
+\[
+D = rac{	ext{slope}}{2 \cdot n}
+\]
+
+#### 3. **Segmented Fitting**
+
+To enhance reliability, the dataset is often divided into segments. For each segment, the slope is calculated, and the final \(D\) is obtained by averaging the results across all segments.
+
+---
 
 ### Step 3: Unit Conversion
-The raw slope is calculated in units of Å^2/time_unit. To convert this into cm^2/s:
-1. 1 Å = 10^-8 cm;
-2. 1 Å^2 = 10^-16 cm^2;
-3. If time is measured in fs (1 fs = 10^-15 s):
-   1 Å^2/fs = 10^-1 cm^2/s
 
-Finally, expressing D in 10^-4 cm^2/s:
-D = slope / (2 * n * time_unit) * 10^-4
+#### 1. **Ångström to Centimeters**
+
+- \(1 	ext{Å} = 10^{-8} 	ext{cm}\)
+- \(1 	ext{Å}^2 = (10^{-8})^2 = 10^{-16} 	ext{cm}^2\)
+
+#### 2. **Femtoseconds to Seconds**
+
+- \(1 	ext{fs} = 10^{-15} 	ext{s}\)
+
+If the slope is in \(	ext{Å}^2/	ext{fs}\), convert to \(	ext{cm}^2/	ext{s}\):
+
+\[
+1 	ext{Å}^2/	ext{fs} = 10^{-16} 	ext{cm}^2 / 10^{-15} 	ext{s} = 10^{-1} 	ext{cm}^2/	ext{s}
+\]
+
+#### 3. **Express in \(10^{-4} 	ext{cm}^2/	ext{s}\)**
+
+To standardize results:
+
+\[
+D = rac{	ext{slope}}{2 \cdot n \cdot 	ext{time\_unit}} \cdot 10^{-4}
+\]
+
+Where \(	ext{time\_unit}\) is the scaling factor for time (e.g., 1 for fs, 1000 for ps).
+
+---
+
+### Key Insights
+
+1. **Dimensional Influence**: Higher dimensions (\(n\)) result in faster diffusion due to increased MSD. The factor \(2 \cdot n\) adjusts \(D\) to account for this.
+2. **Noise Mitigation**: Fitting MSD curves reduces noise in experimental data, leading to more accurate \(D\) values.
+3. **Unit Consistency**: Converting experimental data (\(	ext{Å}^2/	ext{fs}\)) to standard physical units (\(	ext{cm}^2/	ext{s}\)) ensures proper interpretation.
+
+---
 
 ## Installation
 
 ### Clone the Repository
-git clone https://github.com/yourusername/compute_diffusion.git
+```bash
+git clone https://github.com/Superionichuan/compute_diffusion.git
 cd compute_diffusion
+```
 
 ### Install the Package
+```bash
 pip install .
+```
 
 ### Install from GitHub
-pip install git+https://github.com/yourusername/compute_diffusion.git
+```bash
+pip install git+https://github.com/Superionichuan/compute_diffusion.git
+```
+
+---
 
 ## Usage
 
 ### Command Line
-
-compute-diffusion --filename MSD__ --skip_row 1 --time_index 0 --msd_col 1 --time_unit 1 --group_size 4 --dimension 3
+```bash
+compute-diffusion --filename MSD__                   --skip_row 1                   --time_index 0                   --msd_col 1                   --time_unit 1                   --group_size 4                   --dimension 3
+```
 
 ### Parameters
+| Parameter      | Description                                           |
+|----------------|-------------------------------------------------------|
+| `--filename`   | Input data file (e.g., `MSD__`).                      |
+| `--skip_row`   | Number of rows to skip in the input file.             |
+| `--time_index` | Column index for time data (0-based).                 |
+| `--msd_col`    | Column index for MSD data (0-based).                  |
+| `--time_unit`  | Time unit conversion factor (e.g., 1 for fs, 1000 for ps). |
+| `--group_size` | Number of cumulative segments to compute slopes.      |
+| `--dimension`  | Number of spatial dimensions (e.g., 3 for 3D diffusion). |
 
---filename : Input data file (e.g., MSD__).
---skip_row : Number of rows to skip (e.g., 1).
---time_index : Column index for time data (0-based).
---msd_col : Column index for MSD data (0-based).
---time_unit : Time unit conversion factor (1 for fs, 1000 for ps).
---group_size : Number of cumulative segments.
---dimension : Number of spatial dimensions (e.g., 3 for 3D diffusion).
+---
 
 ## Example Output
 
+```text
 [INFO] Final Configuration:
 {
-    "filename": "MSD__",
+    "filename": "filename",
     "skip_row": 1,
     "time_index": 0,
     "msd_col": 1,
@@ -77,19 +147,33 @@ compute-diffusion --filename MSD__ --skip_row 1 --time_index 0 --msd_col 1 --tim
     "dimension": 3
 }
 
-[INFO] Data points: 9999, Segment size: 2499
-Segment 1 slope= 3.612335
-Segment 2 slope= 3.329569
-Segment 3 slope= 3.381865
-Segment 4 slope= 3.497184
+[INFO] Data points: 10000, Segment size: 2500
+Segment 1 :  1 ~ 2500  slope= 3.612335
+Segment 2 :  1 ~ 5000  slope= 3.329569
+Segment 3 :  1 ~ 7500  slope= 3.381865
+Segment 4 :  1 ~ 10000 slope= 3.497184
 
 [RESULT] Avg= 3.455239
 [RESULT] Max= 3.612335
 [RESULT] Min= 3.329569
 [RESULT] D= 0.000058 (10^-4 cm^2/s)
 [RESULT] Error= 0.000010 (10^-4 cm^2/s)
+```
+
+---
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the [MIT License](LICENSE).
 
+---
+
+## Contributions
+
+Contributions are welcome! Please open an issue or submit a pull request on GitHub to contribute to the project.
+
+---
+
+## Contact
+
+For any questions or issues, feel free to contact [shichuan.sun@ntu.edu.sg].
