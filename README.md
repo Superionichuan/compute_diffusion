@@ -1,6 +1,6 @@
 # Compute Diffusion Coefficients from MSD Data
 
-This Python tool calculates diffusion coefficients (\(D\)) from Mean Squared Displacement (MSD) data using user-provided parameters.
+This Python tool calculates diffusion coefficients ($D$) from Mean Squared Displacement (MSD) data using user-provided parameters.
 
 ---
 
@@ -26,7 +26,7 @@ Where:
 
 ---
 
-### Step 2: Using MSD to Calculate \(D\)
+### Step 2: Using MSD to Calculate $D$
 
 #### 1. **Rearranging MSD Formula**
 
@@ -38,7 +38,7 @@ $$
 
 #### 2. **Slope Method**
 
-In practical experiments, MSD values are obtained at various time intervals. To compute \(D\), we calculate the slope of the MSD vs. \(t\) curve:
+In practical experiments, MSD values are obtained at various time intervals. To compute $D$, we calculate the slope of the MSD vs. $t$ curve:
 
 $$
 	\text{slope} = \frac{MSD}{t}
@@ -52,7 +52,7 @@ $$
 
 #### 3. **Segmented Fitting**
 
-To enhance reliability, the dataset is often divided into segments. For each segment, the slope is calculated, and the final \(D\) is obtained by averaging the results across all segments.
+To enhance reliability, the dataset is often divided into segments. For each segment, the slope is calculated, and the final $D$ is obtained by averaging the results across all segments.
 
 The `slope` of the linear fit for the Mean Squared Displacement `(MSD)` vs. time (`t`) is calculated using the formula:
 
@@ -66,7 +66,7 @@ Where:
 - $MSD_i$: The $i$-th MSD value.
 - $sum$: Summation over all data points in the segment.
 
-This formula is derived from the least squares regression method, which minimizes the sum of squared errors between the observed and predicted \(MSD\) values.
+This formula is derived from the least squares regression method, which minimizes the sum of squared errors between the observed and predicted $MSD$ values.
 
 ---
 
@@ -95,16 +95,21 @@ $$
 D = \frac{	slope}{2 \cdot n \cdot 	time\\_unit} \cdot 10^{-4} \\ cm^{2} \\ s^{-1}
 $$
 
-Where \(	ext{time\_unit}\) is the scaling factor for time (e.g., 1 for ps, 0.001 for ps).
+Where $time\\_unit$ is the scaling factor for time (e.g., 1 for ps, 0.001 for fs).
+and the statical error is calculated by:
+
+$$
+D_{error} = \frac{ slope_{Max} - slope_{Min} } {2 \cdot 2 \cdot n \cdot 	time\\_unit} \cdot 10^{-4} \\ cm^{2} \\ s^{-1}
+$$
 
 ---
 
 
 ### Key Insights
 
-1. **Dimensional Influence**: Higher dimensions (\(n\)) result in faster diffusion due to increased MSD. The factor \(2 \cdot n\) adjusts \(D\) to account for this.
-2. **Noise Mitigation**: Fitting MSD curves reduces noise in experimental data, leading to more accurate \(D\) values.
-3. **Unit Consistency**: Converting experimental data (\(	ext{Å}^2/	ext{fs}\)) to standard physical units (\(	ext{cm}^2/	ext{s}\)) ensures proper interpretation.
+1. **Dimensional Influence**: Higher dimensions ($n$) result in faster diffusion due to increased MSD. The factor ($2 \cdot n$) adjusts ($D$) to account for this.
+2. **Noise Mitigation**: Fitting MSD curves reduces noise in experimental data, leading to more accurate ($D$) values.
+3. **Unit Consistency**: Converting experimental data ($Å^{2} \\ ps^{-1}$) to standard physical units ($cm^{2} \\ s^{-1}$) ensures proper interpretation.
 
 ---
 
