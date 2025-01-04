@@ -9,19 +9,19 @@ This Python tool calculates diffusion coefficients (\(D\)) from Mean Squared Dis
 ### Step 1: Mean Squared Displacement (MSD)
 The Mean Squared Displacement (MSD) is defined as:
 
-\[
-MSD(t) = \langle |r(t) - r(0)|^2 angle
-\]
+$$
+MSD(t) = \langle |r(t) - r(0)|^2 \rangle
+$$
 
 For normal diffusion in an n-dimensional space:
 
-\[
+$$
 MSD(t) = 2 \cdot n \cdot D \cdot t
-\]
+$$
 
 Where:
-- **n**: Dimension of the system (e.g., 1 for 1D, 2 for 2D, and 3 for 3D)
-- **D**: Diffusion coefficient (cm\(^2\)/s)
+- **n**: Dimension of the system (e.g., 1 for `1D`, 2 for `2D`, and 3 for `3D`)
+- **D**: Diffusion coefficient [10⁻⁴ cm²/s]
 - **t**: Time (s)
 
 ---
@@ -32,27 +32,41 @@ Where:
 
 From the MSD equation:
 
-\[
-D = rac{MSD(t)}{2 \cdot n \cdot t}
-\]
+$$
+D = \frac{MSD(t)}{2 \cdot n \cdot t}
+$$
 
 #### 2. **Slope Method**
 
 In practical experiments, MSD values are obtained at various time intervals. To compute \(D\), we calculate the slope of the MSD vs. \(t\) curve:
 
-\[
-	ext{slope} = rac{MSD}{t}
-\]
+$$
+	\text{slope} = \frac{MSD}{t}
+$$
 
 Substituting this into the formula for \(D\):
 
-\[
-D = rac{	ext{slope}}{2 \cdot n}
-\]
+$$
+D = \frac{\text{slope}}{2 \cdot n}
+$$
 
 #### 3. **Segmented Fitting**
 
 To enhance reliability, the dataset is often divided into segments. For each segment, the slope is calculated, and the final \(D\) is obtained by averaging the results across all segments.
+
+The `slope` of the linear fit for the Mean Squared Displacement `(MSD)` vs. time (`t`) is calculated using the formula:
+
+$$
+\text{slope} = \frac{N \sum (t_i \cdot MSD_i) - \sum t_i \sum MSD_i}{N \sum t_i^2 - (\sum t_i)^2}
+$$
+
+Where:
+- $N$: The number of data points in the segment.
+- $t_i$: The $i$-th time value.
+- $MSD_i$: The $i$-th MSD value.
+- $sum$: Summation over all data points in the segment.
+
+This formula is derived from the least squares regression method, which minimizes the sum of squared errors between the observed and predicted \(MSD\) values.
 
 ---
 
@@ -60,30 +74,31 @@ To enhance reliability, the dataset is often divided into segments. For each seg
 
 #### 1. **Ångström to Centimeters**
 
-- \(1 	ext{Å} = 10^{-8} 	ext{cm}\)
-- \(1 	ext{Å}^2 = (10^{-8})^2 = 10^{-16} 	ext{cm}^2\)
+- $1 \\ Å = 10^{-8} \\ cm²$
+- $1 \\ Å^{2} = (10^{-8})^2  =  10^{-16} 	\\ cm^{2} $
 
 #### 2. **Femtoseconds to Seconds**
 
-- \(1 	ext{fs} = 10^{-15} 	ext{s}\)
+- $1 \\ ps = 10^{-12} \\ s $
+  
+If the slope is in  $Å^{2}$  ps, convert to $cm^{2}$ s:
 
-If the slope is in \(	ext{Å}^2/	ext{fs}\), convert to \(	ext{cm}^2/	ext{s}\):
+$$
+\frac{{Å}^2}{ps} = \frac{10^{-16} \\ cm^{2} }{ 10^{-12} \\ s }= 10^{-4} \\ cm^{2} \\ s^{-1}
+$$
 
-\[
-1 	ext{Å}^2/	ext{fs} = 10^{-16} 	ext{cm}^2 / 10^{-15} 	ext{s} = 10^{-1} 	ext{cm}^2/	ext{s}
-\]
-
-#### 3. **Express in \(10^{-4} 	ext{cm}^2/	ext{s}\)**
+#### 3. **Express in $10^{-4} \\ cm^{2} \\ s$**
 
 To standardize results:
 
-\[
-D = rac{	ext{slope}}{2 \cdot n \cdot 	ext{time\_unit}} \cdot 10^{-4}
-\]
+$$
+D = \frac{	slope}{2 \cdot n \cdot 	time\\_unit} \cdot 10^{-4} \\ cm^{2} \\ s^{-1}
+$$
 
-Where \(	ext{time\_unit}\) is the scaling factor for time (e.g., 1 for fs, 1000 for ps).
+Where \(	ext{time\_unit}\) is the scaling factor for time (e.g., 1 for ps, 0.001 for ps).
 
 ---
+
 
 ### Key Insights
 
