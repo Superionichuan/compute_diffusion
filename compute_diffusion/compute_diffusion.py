@@ -36,7 +36,7 @@ def parse_command_line():
     parser.add_argument("--skip_row",          type=int, help="skip rows from head")
     parser.add_argument("--time_index",        type=int, help="Time column index (0-based)")
     parser.add_argument("--msd_col",           type=int, help="MSD column (0-based)")
-    parser.add_argument("--time_unit",         type=int, help="Time unit：defult is ps,so set 1 when unit is ps, and set 0.001 when use fs")
+    parser.add_argument("--time_unit",         type=float, help="Time unit：defult is ps,so set 1 when unit is ps, and set 0.001 when use fs")
     parser.add_argument("--group_size",        type=int, help="batch number")
     parser.add_argument("--dimension",         type=int, help="System dimension")
     args = parser.parse_args()
