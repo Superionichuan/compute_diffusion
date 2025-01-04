@@ -77,7 +77,7 @@ This formula is derived from the least squares regression method, which minimize
 - $1 \\ Å = 10^{-8} \\ cm²$
 - $1 \\ Å^{2} = (10^{-8})^2  =  10^{-16} 	\\ cm^{2} $
 
-#### 2. **Femtoseconds to Seconds**
+#### 2. **Picoseconds to Seconds**
 
 - $1 \\ ps = 10^{-12} \\ s $
   
@@ -87,7 +87,7 @@ $$
 \frac{{Å}^2}{ps} = \frac{10^{-16} \\ cm^{2} }{ 10^{-12} \\ s }= 10^{-4} \\ cm^{2} \\ s^{-1}
 $$
 
-#### 3. **Express in $10^{-4} \\ cm^{2} \\ s$**
+#### 3. **General case (with time_unit) to express in $10^{-4} \\ cm^{2} \\ s$**
 
 To standardize results:
 
