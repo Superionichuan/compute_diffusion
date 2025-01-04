@@ -4,7 +4,7 @@ This Python tool calculates diffusion coefficients ($D$) from Mean Squared Displ
 
 ---
 
-## Formula Derivation
+## Formula Derivation and Usage Explanation
 
 ### Step 1: Mean Squared Displacement (MSD)
 The Mean Squared Displacement (MSD) is defined as:
