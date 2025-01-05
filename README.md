@@ -87,7 +87,9 @@ $$
 \frac{{Å}^2}{ps} = \frac{10^{-16} \\ cm^{2} }{ 10^{-12} \\ s }= 10^{-4} \\ cm^{2} \\ s^{-1}
 $$
 
-#### 3. **General case (with time_unit) to express in $10^{-4} \\ cm^{2} \\ s$**
+#### 3. **General case$**
+
+We may have time $\tau$ with a different unit from ps. $$[\tau]=[t] \cdot time\\_unit$$
 
 To standardize results:
 
