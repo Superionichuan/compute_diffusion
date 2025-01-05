@@ -124,7 +124,7 @@ def main():
         time_list.append(float(cols[time_idx]))
         msd_list.append(float(cols[msd_idx]))
 
-    time_array = np.array(time_list) * time_unit  # 转换时间单位为 ps
+    time_array = np.array(time_list)  # 转换时间单位为 ps
     msd_array = np.array(msd_list)
 
     n_data = len(time_array)
@@ -135,7 +135,7 @@ def main():
     block_size = n_data // group_size
     print(f"\n[INFO] 数据点数: {n_data}, 每段大小: {block_size}")
 
-    # 累积式分段
+    # accumulative batch
     slopes = []
     for i in range(1, group_size + 1):
         end_idx = i * block_size if i < group_size else n_data
@@ -146,20 +146,20 @@ def main():
         slopes.append(slope)
         print(f"Segment {i} :  1 ~ {end_idx}  slope= {slope:.6f}")
 
-    # 计算整体斜率（使用全体数据）
+    # Calculate slope of data（use all points）
     avg_slope = compute_slope(time_array, msd_array)
 
-    # Max 和 Min
+    # Max and Min
     max_slope = np.max(slopes)
     min_slope = np.min(slopes)
 
-    # 计算扩散系数 D
-    D = avg_slope / (2 * dimension * time_unit)  # 转为 10^-4 cm^2/s
+    # Diffusion coefficient D
+    D = avg_slope / (2 * dimension * time_unit)  # unit 10^-4 cm^2/s
 
-    # 计算误差
+    # Calculate error
     D_error = (max_slope - min_slope) / (2 * 2 * dimension * time_unit)
 
-    # 打印最终结果
+    # Output results
     print(f"\n[RESULT] Avg= {avg_slope:.12f}")
     print(f"[RESULT] Max= {max_slope:.12f}")
     print(f"[RESULT] Min= {min_slope:.12f}")
